@@ -6,6 +6,8 @@
         public string Name { get; set; }
         public String Email {  get; set; }
 
+        public string? Descritption { get; set; }
+
         public ICollection<Event> Events { get; set; } = new List<Event>();
     }
 }

@@ -7,7 +7,7 @@
         public DateTime Date { get; set; }
         public string? Location { get; set; }
 
-        public ICollection<User> Attendees { get; set; } = new List<User>();
+        public ICollection<ApplicationUser> Attendees { get; set; } = new List<ApplicationUser>();
         public Organizer? Organizer { get; set; }
         public int OrganizerId { get; set; }
     }

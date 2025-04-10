@@ -1,23 +1,24 @@
 ﻿using System.Data.Common;
 using dotnet_rest_api_controller_based.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_rest_api_controller_based.DataDb
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     { 
         public AppDbContext(DbContextOptions<AppDbContext> options) 
             : base(options) { }
 
         public DbSet<Event> Events { get; set; } 
-        public DbSet<User> Users { get; set; }
+        //public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Organizer> Organizers {  get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Events)
                 .WithMany(e => e.Attendees);
 

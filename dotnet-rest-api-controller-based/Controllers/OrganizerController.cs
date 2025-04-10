@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace dotnet_rest_api_controller_based.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/organizers")]
     [ApiController]
     public class OrganizerController : ControllerBase
     {
