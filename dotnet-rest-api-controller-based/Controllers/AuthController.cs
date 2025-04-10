@@ -30,7 +30,7 @@ namespace dotnet_rest_api_controller_based.Controllers
                 Email = dto.Email
             };
 
-            var result = await _userManager.CreateAsync (user);
+            var result = await _userManager.CreateAsync (user, dto.Password);
             if (!result.Succeeded) 
             {
                 return BadRequest();
