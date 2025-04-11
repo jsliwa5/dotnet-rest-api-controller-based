@@ -24,63 +24,66 @@ namespace dotnet_rest_api_controller_based.Controllers
             _userManager = userManager; 
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
-        //{
-        //    var events = await _eventRepo.GetEventsAsync();
-        //    return Ok(events);
-        //}
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
+        {
+            var events = await _eventRepo.GetEventsAsync();
+            return Ok(events);
+        }
 
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Event>> GetEvent(int id)
-        //{
-        //    var ev = await _eventRepo.GetEventByIdAsync(id);
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Event>> GetEvent(int id)
+        {
+            var ev = await _eventRepo.GetEventByIdAsync(id);
 
-        //    if (ev == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (ev == null)
+            {
+                return NotFound();
+            }
 
-        //    return Ok(ev);
-        //}
+            return Ok(ev);
+        }
 
-        //[HttpPost]
-        //public async Task<ActionResult<Event>> CreateEvent(Event ev)
-        //{
-        //    if (ev == null)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<Event>> CreateEvent(Event ev)
+        {
+            if (ev == null)
+            {
+                return BadRequest();
+            }
 
-        //    await _eventRepo.AddAsync(ev);
-        //    var isSaved = await _eventRepo.SaveChangesAsync();
+            await _eventRepo.AddAsync(ev);
+            var isSaved = await _eventRepo.SaveChangesAsync();
 
-        //    if (isSaved)
-        //    {
-        //        return CreatedAtAction(nameof(GetEvent), new { id = ev.Id }, ev);
-        //    }
+            if (isSaved)
+            {
+                return CreatedAtAction(nameof(GetEvent), new { id = ev.Id }, ev);
+            }
 
-        //    return StatusCode(500, "Problem occurred while saving the event.");
-        //}
+            return StatusCode(500, "Problem occurred while saving the event.");
+        }
 
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteEvent(int id)
-        //{
-        //    await _eventRepo.RemoveAsync(id);
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteEvent(int id)
+        {
+            await _eventRepo.RemoveAsync(id);
 
-        //    var isDeleted = await _eventRepo.SaveChangesAsync();
+            var isDeleted = await _eventRepo.SaveChangesAsync();
 
-        //    if (isDeleted) 
-        //    {
-        //        return NoContent();
-        //    }
+            if (isDeleted)
+            {
+                return NoContent();
+            }
 
-        //    return StatusCode(500, "Problem occurred while deleting the event.");
+            return StatusCode(500, "Problem occurred while deleting the event.");
 
-        //}
+        }
 
-        [Authorize]
+        
         [HttpPost("{id}/join")]
+        [Authorize]
         public async Task<IActionResult> JoinEvent(int id)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

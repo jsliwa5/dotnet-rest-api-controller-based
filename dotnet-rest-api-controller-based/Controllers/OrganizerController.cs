@@ -1,5 +1,6 @@
 ﻿using dotnet_rest_api_controller_based.Models;
 using dotnet_rest_api_controller_based.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +39,7 @@ namespace dotnet_rest_api_controller_based.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Organizer>> CreateOrganizer(Organizer organizer)
         {
             if (organizer == null)
@@ -58,6 +60,7 @@ namespace dotnet_rest_api_controller_based.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteOrganizer(int id)
         {
             var organizer = _organizerRepo.DeleteAsync(id);

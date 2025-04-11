@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace dotnet_rest_api_controller_based.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -35,6 +35,8 @@ namespace dotnet_rest_api_controller_based.Controllers
             {
                 return BadRequest();
             }
+
+            await _userManager.AddToRoleAsync(user, "User");
 
             await _signInManager.SignInAsync (user, isPersistent: false);
             return Ok();
